@@ -1,5 +1,5 @@
 # PDS-Semaphore
-Basic code and implementation of semaphores in producer consumer scenario with circular buffer.
+Basic code and implementation of semaphores in C language, producer consumer scenario with circular buffer.
 
 To compile in terminal use:
 gcc -pthread inFile.c -o outputFile
