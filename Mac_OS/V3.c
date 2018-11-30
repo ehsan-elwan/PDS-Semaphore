@@ -11,7 +11,6 @@
 #include <string.h>
 #include <unistd.h>
 
-
 #define TRACE
 
 #define NB_TIMES_PROD 2
@@ -244,12 +243,7 @@ int main(int argc, char *argv[]) {
   initializeSharedVariables();
   pthread_mutex_init(&mutex, NULL);
 
-  if ((empty = sem_open("/empty", O_CREAT, 0644, nbPositions)) == SEM_FAILED) {
-    perror("sem_open");
-    exit(EXIT_FAILURE);
-  }
-
-  if ((full = sem_open("/full", O_CREAT, 0644, 0)) == SEM_FAILED) {
+  if ((empty = sem_open("/empty", O_CREAT, 0644, nbPositions)) == SEM_FAILED || (full = sem_open("/full", O_CREAT, 0644, 0)) == SEM_FAILED) {
     perror("sem_open");
     exit(EXIT_FAILURE);
   }
@@ -261,8 +255,8 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < nbTypes; i++) {
     if ((namedSem[i] = sem_open(semNames[i], O_CREAT, 0644, semValues[i])) ==
         SEM_FAILED) {
-
-      perror("sem_open:semaphore already exist\n");
+      fprintf(stderr, "sem_open_error:semaphore %s", namedSem[i]);
+      perror("");
       exit(EXIT_FAILURE);
     }
   }
